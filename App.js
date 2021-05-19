@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import SimpleSeatingChart from './examples/SimpleSeatingChart';
+import SimpleSeatingChartWithChangeConfig from "./examples/SeatingChartWithChangeConfig";
 
 export default class App extends React.Component {
 
@@ -48,6 +49,7 @@ export default class App extends React.Component {
         return this.renderExamples(
             [
                 [SimpleSeatingChart, 'Simple seating chart'],
+                [SimpleSeatingChartWithChangeConfig, 'Seating chart with changeConfig'],
             ]
         );
     }
