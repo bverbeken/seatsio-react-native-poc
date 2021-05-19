@@ -1,6 +1,7 @@
 import {WebView} from 'react-native-webview';
 import React from 'react';
 import PropTypes from 'prop-types';
+import Chart from "./chart";
 
 class SeatsioSeatingChart extends React.Component {
     constructor(props) {
@@ -65,7 +66,7 @@ class SeatsioSeatingChart extends React.Component {
         if (message.type === 'log') {
             console.log(message.data);
         } else if (message.type === 'onChartRendered') {
-            this.props.onChartRendered(message.data);
+            this.props.onChartRendered(new Chart(message.data, this.injectJs.bind(this)));
         } else if (message.type === 'priceFormatterRequested') {
             let formattedPrice = this.props.priceFormatter(message.data.price);
             this.injectJs(
