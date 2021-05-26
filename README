@@ -5,3 +5,9 @@ Requirements:
 To run the examples:
 * yarn install
 * yarn ios
+
+
+
+TODO
+* add all functions on https://docs.seats.io/docs/renderer/chart-properties-chartselectedobjects to chart.js
+*
