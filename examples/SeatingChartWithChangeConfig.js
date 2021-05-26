@@ -16,11 +16,13 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                             onChartRendered={(chart) => this.chart = chart}
                         />
                         <Button
-                            title="Press me"
+                            title="Press me to change the config"
                             onPress={() => {
                                 console.log(this.chart)
                                 this.chart.changeConfig({
-                                    objectColor: object => object.isSelectable() ? 'green' : 'red'
+                                    objectColor: object => object.isSelectable() ? 'green' : 'red',
+                                    objectLabel: object => 'x',
+                                    numberOfPlacesToSelect: 5
                                 })
                             }}
                         />

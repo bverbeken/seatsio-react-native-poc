@@ -1,0 +1,7 @@
+Requirements:
+* node >= 12
+
+
+To run the examples:
+* yarn install
+* yarn ios

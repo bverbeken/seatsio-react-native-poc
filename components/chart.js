@@ -9,6 +9,9 @@ export default class Chart {
         if (newConfig.objectColor) {
             newConfig.objectColor = newConfig.objectColor.toString()
         }
+        if (newConfig.objectLabel) {
+            newConfig.objectLabel = newConfig.objectLabel.toString()
+        }
         this.injectJsFn('chart.changeConfig(' + JSON.stringify(newConfig) + ')');
     }
 
