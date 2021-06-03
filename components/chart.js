@@ -29,6 +29,13 @@ export default class Chart {
         this.injectJsFn(`chart.deselectObjects(${JSON.stringify(objects)})`)
     }
 
+    selectCategories(categories) {
+        this.injectJsFn(`chart.selectCategories(${JSON.stringify(categories)})`)
+    }
+
+    deselectCategories(categories) {
+        this.injectJsFn(`chart.deselectCategories(${JSON.stringify(categories)})`)
+    }
 
     changeConfig(newConfig) {
         if (newConfig.objectColor) {

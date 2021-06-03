@@ -36,6 +36,9 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
 
                         <Button title={"selectObjects(['A-1', 'A-2'])"} onPress={() => this.chart.selectObjects(['A-1', 'A-2'])}/>
                         <Button title={"deselectObjects(['A-1', 'A-2'])"} onPress={() => this.chart.deselectObjects(['A-1', 'A-2'])}/>
+
+                        <Button title={"selectCategories(['3'])"} onPress={() => this.chart.selectCategories(['3'])}/>
+                        <Button title={"deselectCategories(['3'])"} onPress={() => this.chart.deselectCategories(['3'])}/>
                     </View>
                 </ScrollView>
 
