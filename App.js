@@ -49,7 +49,7 @@ export default class App extends React.Component {
         return this.renderExamples(
             [
                 [SimpleSeatingChart, 'Simple seating chart'],
-                [SimpleSeatingChartWithChangeConfig, 'Seating chart with changeConfig'],
+                [SimpleSeatingChartWithChangeConfig, 'call methods on chart'],
             ]
         );
     }

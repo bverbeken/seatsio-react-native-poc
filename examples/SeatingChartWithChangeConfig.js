@@ -16,7 +16,7 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                             onChartRendered={(chart) => this.chart = chart}
                         />
                         <Button
-                            title="Change Config"
+                            title="changeConfig()"
                             onPress={() => {
                                 this.chart.changeConfig({
                                     objectColor: object => object.isSelectable() ? 'green' : 'red',
@@ -25,12 +25,8 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                                 })
                             }}
                         />
-                        <Button
-                            title={"resetView"}
-                            onPress={() => {
-                                this.chart.resetView()
-                            }}
-                        />
+                        <Button title={"resetView()"} onPress={() => this.chart.resetView()}/>
+                        <Button title={"startNewSession()"} onPress={() => this.chart.startNewSession()}/>
                     </View>
 
                 </ScrollView>

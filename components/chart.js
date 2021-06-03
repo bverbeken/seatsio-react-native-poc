@@ -9,6 +9,10 @@ export default class Chart {
         this.injectJsFn('chart.resetView()');
     }
 
+    startNewSession() {
+        this.injectJsFn('chart.startNewSession()');
+    }
+
 
     changeConfig(newConfig) {
         if (newConfig.objectColor) {
