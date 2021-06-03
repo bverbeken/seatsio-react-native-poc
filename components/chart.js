@@ -13,6 +13,10 @@ export default class Chart {
         this.injectJsFn('chart.startNewSession()');
     }
 
+    listSelectedObjects(callback) {
+        this.injectJsFn(`chart.listSelectedObjects(${callback.toString()})`)
+    }
+
 
     changeConfig(newConfig) {
         if (newConfig.objectColor) {
