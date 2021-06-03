@@ -15,6 +15,10 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                             event="smallTheatreEvent2"
                             onChartRendered={(chart) => this.chart = chart}
                         />
+
+                    </View>
+
+                    <View>
                         <Button
                             title="changeConfig()"
                             onPress={() => {
@@ -28,9 +32,11 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                         <Button title={"resetView()"} onPress={() => this.chart.resetView()}/>
                         <Button title={"startNewSession()"} onPress={() => this.chart.startNewSession()}/>
                         <Button title={"listSelectedObjects()"} onPress={() => this.chart.listSelectedObjects(objects => alert(objects.map(o => o.label).join(', ')))} />
+                        <Button title={"clearSelection()"} onPress={() => this.chart.clearSelection()}/>
 
+                        <Button title={"selectObjects(['A-1', 'A-2'])"} onPress={() => this.chart.selectObjects(['A-1', 'A-2'])}/>
+                        <Button title={"deselectObjects(['A-1', 'A-2'])"} onPress={() => this.chart.deselectObjects(['A-1', 'A-2'])}/>
                     </View>
-
                 </ScrollView>
 
             </View>

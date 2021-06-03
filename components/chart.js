@@ -14,7 +14,19 @@ export default class Chart {
     }
 
     listSelectedObjects(callback) {
-        this.injectJsFn(`chart.listSelectedObjects(${callback.toString()})`)
+        this.injectJsFn(`chart.listSelectedObjects(${callback.toString()})`);
+    }
+
+    clearSelection() {
+        this.injectJsFn('chart.clearSelection()');
+    }
+
+    selectObjects(objects) {
+        this.injectJsFn(`chart.selectObjects(${JSON.stringify(objects)})`)
+    }
+
+    deselectObjects(objects) {
+        this.injectJsFn(`chart.deselectObjects(${JSON.stringify(objects)})`)
     }
 
 
