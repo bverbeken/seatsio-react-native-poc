@@ -5,6 +5,11 @@ export default class Chart {
         this.injectJsFn = injectJsFn
     }
 
+    resetView() {
+        this.injectJsFn('chart.resetView()');
+    }
+
+
     changeConfig(newConfig) {
         if (newConfig.objectColor) {
             newConfig.objectColor = newConfig.objectColor.toString()
@@ -14,5 +19,7 @@ export default class Chart {
         }
         this.injectJsFn('chart.changeConfig(' + JSON.stringify(newConfig) + ')');
     }
+
+
 
 }

@@ -16,14 +16,19 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                             onChartRendered={(chart) => this.chart = chart}
                         />
                         <Button
-                            title="Press me to change the config"
+                            title="Change Config"
                             onPress={() => {
-                                console.log(this.chart)
                                 this.chart.changeConfig({
                                     objectColor: object => object.isSelectable() ? 'green' : 'red',
                                     objectLabel: object => 'x',
                                     numberOfPlacesToSelect: 5
                                 })
+                            }}
+                        />
+                        <Button
+                            title={"resetView"}
+                            onPress={() => {
+                                this.chart.resetView()
                             }}
                         />
                     </View>
@@ -33,7 +38,6 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
             </View>
         );
     }
-
 
     styles = StyleSheet.create({
         container: {
