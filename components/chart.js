@@ -1,4 +1,5 @@
 import Deferred from "./deferred";
+import {randomUuid} from "./util";
 
 export default class Chart {
 
@@ -52,19 +53,20 @@ export default class Chart {
 
     findObject(label) {
         const promise = new Deferred()
-        this.registerPromiseFn('findObject', promise)
+        const uuid = randomUuid()
+        this.registerPromiseFn(uuid, promise)
         this.injectJsFn(`
             chart.findObject(${JSON.stringify(label)})
             .then((o) => {
                 window.ReactNativeWebView.postMessage(JSON.stringify({
-                    type: "findObject",
+                    type: "${uuid}",
                     promiseResult: "resolve",
                     data: o
                 }))
             })
             .catch((e) => {
                 window.ReactNativeWebView.postMessage(JSON.stringify({
-                    type: "findObject",
+                    type: "${uuid}",
                     promiseResult: "reject",
                     data: e
                 }))
