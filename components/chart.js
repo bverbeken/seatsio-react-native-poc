@@ -1,5 +1,5 @@
-import Deferred from "./deferred";
-import {randomUuid} from "./util";
+import Deferred from "./deferred"
+import {randomUuid} from "./util"
 
 export default class Chart {
 
@@ -10,19 +10,19 @@ export default class Chart {
     }
 
     resetView() {
-        this.injectJsFn('chart.resetView()');
+        this.injectJsFn('chart.resetView()')
     }
 
     startNewSession() {
-        this.injectJsFn('chart.startNewSession()');
+        this.injectJsFn('chart.startNewSession()')
     }
 
     listSelectedObjects(callback) {
-        this.injectJsFn(`chart.listSelectedObjects(${callback.toString()})`);
+        this.injectJsFn(`chart.listSelectedObjects(${callback.toString()})`)
     }
 
     clearSelection() {
-        this.injectJsFn('chart.clearSelection()');
+        this.injectJsFn('chart.clearSelection()')
     }
 
     selectObjects(objects) {
@@ -48,7 +48,7 @@ export default class Chart {
         if (newConfig.objectLabel) {
             newConfig.objectLabel = newConfig.objectLabel.toString()
         }
-        this.injectJsFn('chart.changeConfig(' + JSON.stringify(newConfig) + ')');
+        this.injectJsFn('chart.changeConfig(' + JSON.stringify(newConfig) + ')')
     }
 
     findObject(label) {
@@ -56,7 +56,15 @@ export default class Chart {
     }
 
     listCategories() {
-        return this._injectJsAndReturnDeferred(`chart.listCategories()`);
+        return this._injectJsAndReturnDeferred(`chart.listCategories()`)
+    }
+
+    zoomToSelectedObjects() {
+        return this._injectJsAndReturnDeferred(`chart.zoomToSelectedObjects()`)
+    }
+
+    zoomToFilteredCategories() {
+        return this._injectJsAndReturnDeferred(`chart.zoomToFilteredCategories()`)
     }
 
     _injectJsAndReturnDeferred(js) {
@@ -79,6 +87,6 @@ export default class Chart {
                 }))
             })
         `)
-        return deferred;
+        return deferred
     }
 }

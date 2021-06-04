@@ -50,6 +50,9 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
 
                         <Button title={"listCategories()"} onPress={() => this.chart.listCategories().then(categories => console.log(categories))}/>
 
+                        <Button title={"zoomToSelectedObjects()"} onPress={() => this.chart.zoomToSelectedObjects().then(() => console.log("zooming done"))}/>
+                        <Button title={"zoomToFilteredCategories()"} onPress={() => this.chart.zoomToFilteredCategories().then(() => console.log("zooming done"))}/>
+
                     </View>
                 </ScrollView>
 
