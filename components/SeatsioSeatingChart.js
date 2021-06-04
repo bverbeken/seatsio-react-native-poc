@@ -7,6 +7,7 @@ class SeatsioSeatingChart extends React.Component {
     constructor(props) {
         super(props);
         this.divId = 'chart';
+        this.promises = {}
     }
 
     async componentDidUpdate(prevProps) {
@@ -28,6 +29,10 @@ class SeatsioSeatingChart extends React.Component {
 
     injectJs(js) {
         this.webRef.injectJavaScript(js + '; true;');
+    }
+
+    registerPromise(name, promise) {
+        this.promises[name] = promise
     }
 
     didPropsChange(prevProps, nextProps) {
@@ -66,7 +71,7 @@ class SeatsioSeatingChart extends React.Component {
         if (message.type === 'log') {
             console.log(message.data);
         } else if (message.type === 'onChartRendered') {
-            this.props.onChartRendered(new Chart(message.data, this.injectJs.bind(this)));
+            this.props.onChartRendered(new Chart(message.data, this.injectJs.bind(this), this.registerPromise.bind(this)));
         } else if (message.type === 'priceFormatterRequested') {
             let formattedPrice = this.props.priceFormatter(message.data.price);
             this.injectJs(
@@ -77,6 +82,15 @@ class SeatsioSeatingChart extends React.Component {
             this.injectJs(
                 `resolvePromise(${message.data.promiseId}, "${tooltipInfo}")`
             );
+        } else {
+            let promise = this.promises[message.type];
+            if (promise !== undefined) {
+                if (message.promiseResult === 'resolve') {
+                    promise.resolve(message.data)
+                } else {
+                    promise.reject(message.data)
+                }
+            }
         }
     }
 

@@ -1,8 +1,11 @@
+import Deferred from "./deferred";
+
 export default class Chart {
 
-    constructor(data, injectJsFn) {
+    constructor(data, injectJsFn, registerPromiseFn) {
         this.data = data
         this.injectJsFn = injectJsFn
+        this.registerPromiseFn = registerPromiseFn
     }
 
     resetView() {
@@ -47,6 +50,28 @@ export default class Chart {
         this.injectJsFn('chart.changeConfig(' + JSON.stringify(newConfig) + ')');
     }
 
+    findObject(label) {
+        const promise = new Deferred()
+        this.registerPromiseFn('findObject', promise)
+        this.injectJsFn(`
+            chart.findObject(${JSON.stringify(label)})
+            .then((o) => {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: "findObject",
+                    promiseResult: "resolve",
+                    data: o
+                }))
+            })
+            .catch((e) => {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: "findObject",
+                    promiseResult: "reject",
+                    data: e
+                }))
+            })
+        `)
+        return promise;
+    }
 
 
 }

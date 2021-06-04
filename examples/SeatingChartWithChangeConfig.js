@@ -19,16 +19,6 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                     </View>
 
                     <View>
-                        <Button
-                            title="changeConfig()"
-                            onPress={() => {
-                                this.chart.changeConfig({
-                                    objectColor: object => object.isSelectable() ? 'green' : 'red',
-                                    objectLabel: object => 'x',
-                                    numberOfPlacesToSelect: 5
-                                })
-                            }}
-                        />
                         <Button title={"resetView()"} onPress={() => this.chart.resetView()}/>
                         <Button title={"startNewSession()"} onPress={() => this.chart.startNewSession()}/>
                         <Button title={"listSelectedObjects()"} onPress={() => this.chart.listSelectedObjects(objects => alert(objects.map(o => o.label).join(', ')))} />
@@ -39,6 +29,24 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
 
                         <Button title={"selectCategories(['3'])"} onPress={() => this.chart.selectCategories(['3'])}/>
                         <Button title={"deselectCategories(['3'])"} onPress={() => this.chart.deselectCategories(['3'])}/>
+
+                        <Button
+                            title="changeConfig()"
+                            onPress={() => {
+                                this.chart.changeConfig({
+                                    objectColor: object => object.isSelectable() ? 'green' : 'red',
+                                    objectLabel: object => 'x',
+                                    numberOfPlacesToSelect: 5
+                                })
+                            }}
+                        />
+
+                        <Button title={"findObject('A-1')"} onPress={() => {
+                            this.chart.findObject('A-1').then(object => alert('object found: ' + object.label))
+                        }}/>
+                        <Button title={"findObject('A-111')"} onPress={() => {
+                            this.chart.findObject('A-111').catch(object => alert('object not found!'))
+                        }}/>
                     </View>
                 </ScrollView>
 
