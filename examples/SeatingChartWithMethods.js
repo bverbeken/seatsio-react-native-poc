@@ -14,11 +14,14 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                             workspaceKey="publicDemoKey"
                             event="smallTheatreEvent2"
                             onChartRendered={(chart) => this.chart = chart}
+                            session={"start"}
                         />
 
                     </View>
 
                     <View>
+                        <Button title={"getHoldToken()"} onPress={() => this.chart.getHoldToken().then(holdToken => alert(holdToken))}/>
+
                         <Button title={"resetView()"} onPress={() => this.chart.resetView()}/>
                         <Button title={"startNewSession()"} onPress={() => this.chart.startNewSession()}/>
                         <Button title={"listSelectedObjects()"} onPress={() => this.chart.listSelectedObjects().then(objects => alert(objects.map(o => o.label).join(', ')))} />

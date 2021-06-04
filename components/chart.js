@@ -9,6 +9,10 @@ export default class Chart {
         this.registerPromiseFn = registerPromiseFn
     }
 
+    getHoldToken() {
+        return this._injectJsAndReturnDeferred(`getHoldToken()`)
+    }
+
     resetView() {
         return this._injectJsAndReturnDeferred('chart.resetView()')
     }

@@ -103,6 +103,7 @@ class SeatsioSeatingChart extends React.Component {
                 <script src="${this.props.chartJsUrl}"></script>
             </head>
             <body>
+                <div id="${this.divId}"></div>
                 <script>
                     let promises = [];
                     let promiseCounter = 0;
@@ -110,10 +111,13 @@ class SeatsioSeatingChart extends React.Component {
                     const resolvePromise = (promiseId, data) => {
                         promises[promiseId](data)
                     }
-                </script>
-                <div id="${this.divId}"></div>
-                <script>
+                    
                     let chart = new seatsio.SeatingChart(${this.configAsString()}).render();
+                    
+                    const getHoldToken = () => {
+                        return Promise.resolve(chart.holdToken)
+                    }
+                    
                 </script>
             </body>
             </html>
