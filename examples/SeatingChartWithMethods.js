@@ -47,6 +47,9 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                         <Button title={"findObject('A-111')"} onPress={() => {
                             this.chart.findObject('A-111').catch(() => alert('object not found!'))
                         }}/>
+
+                        <Button title={"listCategories()"} onPress={() => this.chart.listCategories().then(categories => console.log(categories))}/>
+
                     </View>
                 </ScrollView>
 

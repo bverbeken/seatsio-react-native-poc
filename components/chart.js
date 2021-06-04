@@ -52,9 +52,9 @@ export default class Chart {
     }
 
     findObject(label) {
-        const promise = new Deferred()
+        const deferred = new Deferred()
         const uuid = randomUuid()
-        this.registerPromiseFn(uuid, promise)
+        this.registerPromiseFn(uuid, deferred)
         this.injectJsFn(`
             chart.findObject(${JSON.stringify(label)})
             .then((o) => {
@@ -72,8 +72,31 @@ export default class Chart {
                 }))
             })
         `)
-        return promise;
+        return deferred;
     }
 
+    listCategories() {
+        const deferred = new Deferred()
+        const uuid = randomUuid()
+        this.registerPromiseFn(uuid, deferred)
+        this.injectJsFn(`
+            chart.listCategories()
+            .then((o) => {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: "${uuid}",
+                    promiseResult: "resolve",
+                    data: o
+                }))
+            })
+            .catch((e) => {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: "${uuid}",
+                    promiseResult: "reject",
+                    data: e
+                }))
+            })
+        `)
+        return deferred;
+    }
 
 }
