@@ -52,35 +52,18 @@ export default class Chart {
     }
 
     findObject(label) {
-        const deferred = new Deferred()
-        const uuid = randomUuid()
-        this.registerPromiseFn(uuid, deferred)
-        this.injectJsFn(`
-            chart.findObject(${JSON.stringify(label)})
-            .then((o) => {
-                window.ReactNativeWebView.postMessage(JSON.stringify({
-                    type: "${uuid}",
-                    promiseResult: "resolve",
-                    data: o
-                }))
-            })
-            .catch((e) => {
-                window.ReactNativeWebView.postMessage(JSON.stringify({
-                    type: "${uuid}",
-                    promiseResult: "reject",
-                    data: e
-                }))
-            })
-        `)
-        return deferred;
+        return this._injectJsAndReturnDeferred(`chart.findObject(${JSON.stringify(label)})`)
     }
 
     listCategories() {
+        return this._injectJsAndReturnDeferred(`chart.listCategories()`);
+    }
+
+    _injectJsAndReturnDeferred(js) {
         const deferred = new Deferred()
         const uuid = randomUuid()
         this.registerPromiseFn(uuid, deferred)
-        this.injectJsFn(`
-            chart.listCategories()
+        this.injectJsFn(js + `
             .then((o) => {
                 window.ReactNativeWebView.postMessage(JSON.stringify({
                     type: "${uuid}",
@@ -98,5 +81,4 @@ export default class Chart {
         `)
         return deferred;
     }
-
 }
