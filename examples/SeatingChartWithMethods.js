@@ -21,7 +21,7 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                     <View>
                         <Button title={"resetView()"} onPress={() => this.chart.resetView()}/>
                         <Button title={"startNewSession()"} onPress={() => this.chart.startNewSession()}/>
-                        <Button title={"listSelectedObjects()"} onPress={() => this.chart.listSelectedObjects(objects => alert(objects.map(o => o.label).join(', ')))} />
+                        <Button title={"listSelectedObjects()"} onPress={() => this.chart.listSelectedObjects().then(objects => alert(objects.map(o => o.label).join(', ')))} />
                         <Button title={"clearSelection()"} onPress={() => this.chart.clearSelection()}/>
 
                         <Button title={"selectObjects(['A-1', 'A-2'])"} onPress={() => this.chart.selectObjects(['A-1', 'A-2'])}/>

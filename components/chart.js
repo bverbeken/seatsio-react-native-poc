@@ -10,35 +10,35 @@ export default class Chart {
     }
 
     resetView() {
-        this.injectJsFn('chart.resetView()')
+        return this._injectJsAndReturnDeferred('chart.resetView()')
     }
 
     startNewSession() {
-        this.injectJsFn('chart.startNewSession()')
+        return this._injectJsAndReturnDeferred('chart.startNewSession()')
     }
 
-    listSelectedObjects(callback) {
-        this.injectJsFn(`chart.listSelectedObjects(${callback.toString()})`)
+    listSelectedObjects() {
+        return this._injectJsAndReturnDeferred(`chart.listSelectedObjects()`)
     }
 
     clearSelection() {
-        this.injectJsFn('chart.clearSelection()')
+        return this._injectJsAndReturnDeferred('chart.clearSelection()')
     }
 
     selectObjects(objects) {
-        this.injectJsFn(`chart.selectObjects(${JSON.stringify(objects)})`)
+        return this._injectJsAndReturnDeferred(`chart.selectObjects(${JSON.stringify(objects)})`)
     }
 
     deselectObjects(objects) {
-        this.injectJsFn(`chart.deselectObjects(${JSON.stringify(objects)})`)
+        return this._injectJsAndReturnDeferred(`chart.deselectObjects(${JSON.stringify(objects)})`)
     }
 
     selectCategories(categories) {
-        this.injectJsFn(`chart.selectCategories(${JSON.stringify(categories)})`)
+        return this._injectJsAndReturnDeferred(`chart.selectCategories(${JSON.stringify(categories)})`)
     }
 
     deselectCategories(categories) {
-        this.injectJsFn(`chart.deselectCategories(${JSON.stringify(categories)})`)
+        return this._injectJsAndReturnDeferred(`chart.deselectCategories(${JSON.stringify(categories)})`)
     }
 
     changeConfig(newConfig) {
@@ -48,7 +48,7 @@ export default class Chart {
         if (newConfig.objectLabel) {
             newConfig.objectLabel = newConfig.objectLabel.toString()
         }
-        this.injectJsFn('chart.changeConfig(' + JSON.stringify(newConfig) + ')')
+        return this._injectJsAndReturnDeferred('chart.changeConfig(' + JSON.stringify(newConfig) + ')')
     }
 
     findObject(label) {
