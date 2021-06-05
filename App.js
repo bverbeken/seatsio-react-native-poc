@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import SimpleSeatingChart from './examples/SimpleSeatingChart';
 import SeatingChartWithMethods from "./examples/SeatingChartWithMethods";
+import SeatingChartWithObjectMethods from "./examples/SeatingChartWithObjectMethods";
 
 export default class App extends React.Component {
 
@@ -50,6 +51,7 @@ export default class App extends React.Component {
             [
                 [SimpleSeatingChart, 'Simple seating chart'],
                 [SeatingChartWithMethods, 'call methods on chart'],
+                [SeatingChartWithObjectMethods, 'call methods on objects'],
             ]
         );
     }

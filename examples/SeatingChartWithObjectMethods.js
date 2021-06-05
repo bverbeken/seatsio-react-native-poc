@@ -1,26 +1,31 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import SeatsioSeatingChart from "../components/SeatsioSeatingChart";
 
-class SimpleSeatingChart extends React.Component {
+class SimpleSeatingChartWithChangeConfig extends React.Component {
 
     render() {
         return (
             <View style={this.styles.container}>
                 <ScrollView style={StyleSheet.absoluteFill} contentContainerStyle={this.styles.scrollview}>
-                    <Text>Demo: Simple Seating Chart, no config</Text>
+                    <Text>Demo: call methods on Objects</Text>
                     <View style={this.styles.chart}>
                         <SeatsioSeatingChart
                             workspaceKey="publicDemoKey"
                             event="smallTheatreEvent2"
+                            onChartRendered={(chart) => this.chart = chart}
                         />
+
                     </View>
 
+                    <View>
+                        <Text>TODO</Text>
+                    </View>
                 </ScrollView>
+
             </View>
         );
     }
-
 
     styles = StyleSheet.create({
         container: {
@@ -41,4 +46,4 @@ class SimpleSeatingChart extends React.Component {
 }
 
 
-export default SimpleSeatingChart;
+export default SimpleSeatingChartWithChangeConfig;

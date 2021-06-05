@@ -8,7 +8,7 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
         return (
             <View style={this.styles.container}>
                 <ScrollView style={StyleSheet.absoluteFill} contentContainerStyle={this.styles.scrollview}>
-                    <Text>Simple Seating Chart, no config</Text>
+                    <Text>Demo: how to call methods on chart</Text>
                     <View style={this.styles.chart}>
                         <SeatsioSeatingChart
                             workspaceKey="publicDemoKey"
