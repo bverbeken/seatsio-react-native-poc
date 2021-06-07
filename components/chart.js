@@ -1,5 +1,6 @@
 import Deferred from "./deferred"
 import {randomUuid} from "./util"
+import SeatsioObject from "./seatsioObject";
 
 export default class Chart {
 
@@ -56,7 +57,7 @@ export default class Chart {
     }
 
     findObject(label) {
-        return this._injectJsAndReturnDeferred(`chart.findObject(${JSON.stringify(label)})`)
+        return this._injectJsAndReturnDeferred(`chart.findObject(${JSON.stringify(label)})`, o => new SeatsioObject(o, this.injectJsFn))
     }
 
     listCategories() {
@@ -71,8 +72,8 @@ export default class Chart {
         return this._injectJsAndReturnDeferred(`chart.zoomToFilteredCategories()`)
     }
 
-    _injectJsAndReturnDeferred(js) {
-        const deferred = new Deferred()
+    _injectJsAndReturnDeferred(js, transformer) {
+        const deferred = new Deferred(transformer)
         const uuid = randomUuid()
         this.registerPromiseFn(uuid, deferred)
         this.injectJsFn(js + `

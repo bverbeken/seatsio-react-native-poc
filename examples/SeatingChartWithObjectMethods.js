@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import SeatsioSeatingChart from "../components/SeatsioSeatingChart";
 
 class SimpleSeatingChartWithChangeConfig extends React.Component {
@@ -17,14 +17,18 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                         />
 
                     </View>
-
+                    {this.button("Log object properties", (o) => console.log(o.isInChannel('abc')))}
                     <View>
-                        <Text>TODO</Text>
+
                     </View>
                 </ScrollView>
 
             </View>
         );
+    }
+
+    button(caption, fn) {
+        return <Button title={caption} onPress={() => this.chart.findObject('A-1').then(fn)}/>;
     }
 
     styles = StyleSheet.create({
