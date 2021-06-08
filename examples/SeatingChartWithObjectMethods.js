@@ -41,6 +41,14 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                             this.chart.findObject('A-1')
                                 .then((o) => o.select())
                                 .then(result => console.log('seat A-1 selected!'))}/>
+                        <Button title={"Deselect A-1 (adult)"} onPress={() =>
+                            this.chart.findObject('A-1')
+                                .then((o) => o.deselect('adult'))
+                                .then(result => console.log('seat A-1 deselected!'))}/>
+                        <Button title={"Deselect A-1 (no ticket type)"} onPress={() =>
+                            this.chart.findObject('A-1')
+                                .then((o) => o.deselect())
+                                .then(result => console.log('seat A-1 deselected!'))}/>
                     <View>
 
                     </View>
