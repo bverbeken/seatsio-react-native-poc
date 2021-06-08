@@ -1,13 +1,30 @@
 export default class SeatsioObject {
 
     constructor(data, injectJsFn) {
-        console.log(data)
-        this.data = data
+        this.category = data.category
+        this.center = data.center
+        this.chart = data.chart
+        this.dataPerEvent = data.dataPerEvent
+        this.disabledBySocialDistancingRules = data.disabledBySocialDistancingRules
+        this.forSale = data.forSale
+        this.id = data.id
+        this.inSelectableChannel = data.inSelectableChannel
+        this.isOrphan = data.isOrphan
+        this.label = data.label
+        this.labels = data.labels
+        this.objectType = data.objectType
+        this.parent = data.parent
+        this.seatId = data.seatId
+        this.selectable = data.selectable
+        this.selected = data.selected
+        this.status = data.status
+        this.uuid = data.uuid
+
         this.injectJsFn = injectJsFn
     }
 
-    isInChannel(channelKey) {
-        return true; // TODO bver implement
+    async isInChannel(channelKey) {
+        return this.injectJsFn(`chart.findObject(${JSON.stringify(this.id)}).then(o => o.isInChannel(${JSON.stringify(channelKey)}))`)
     }
 
 

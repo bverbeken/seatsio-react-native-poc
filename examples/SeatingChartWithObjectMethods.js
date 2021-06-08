@@ -20,10 +20,7 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                     {<Button title={"Log object properties"}
                              onPress={() => {
                                  return this.chart.findObject('A-1')
-                                     .then((o) => {
-                                         console.log(o.label)
-                                         return o.isInChannel('abc');
-                                     })
+                                     .then((o) => o.isInChannel('1c0df13b-ecab-e55c-8fc9-799779ba18e7'))
                                      .then(isInChannel => console.log('in channel: ' + isInChannel))
                              }}/>}
                     <View>
