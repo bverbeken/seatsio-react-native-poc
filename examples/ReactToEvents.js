@@ -15,6 +15,7 @@ class ReactToEventsExample extends React.Component {
                             event="smallTheatreEvent2"
                             onObjectSelected={o => o.pulse()}
                             onObjectDeselected={o => o.unpulse()}
+                            onObjectClicked={o => console.log("object clicked: " + o.label)}
                         />
                     </View>
 

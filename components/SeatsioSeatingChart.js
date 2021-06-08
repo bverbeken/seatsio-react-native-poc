@@ -98,6 +98,8 @@ class SeatsioSeatingChart extends React.Component {
             console.log(message.data);
         } else if (message.type === 'onChartRendered') {
             this.props.onChartRendered(new Chart(message.data, this.injectJsAndReturnDeferredFn.bind(this)));
+        } else if (message.type === 'onObjectClicked') {
+            this.props.onObjectClicked(new SeatsioObject(message.data, this.injectJsAndReturnDeferredFn.bind(this)));
         } else if (message.type === 'onObjectSelected') {
             this.props.onObjectSelected(new SeatsioObject(message.data.object, this.injectJsAndReturnDeferredFn.bind(this)), message.selectedTicketType)
         } else if (message.type === 'onObjectDeselected') {
@@ -157,6 +159,7 @@ class SeatsioSeatingChart extends React.Component {
     configAsString() {
         let {
             onChartRendered,
+            onObjectClicked,
             onObjectSelected,
             onObjectDeselected,
             priceFormatter,
@@ -178,6 +181,16 @@ class SeatsioSeatingChart extends React.Component {
                     window.ReactNativeWebView.postMessage(JSON.stringify({
                         type: "onChartRendered",
                         data: chart
+                    }))
+                }
+            `;
+        }
+        if (onObjectClicked) {
+            configString += `
+                , "onObjectClicked": (object) => {
+                    window.ReactNativeWebView.postMessage(JSON.stringify({
+                        type: "onObjectClicked",
+                        data: object
                     }))
                 }
             `;
@@ -328,6 +341,9 @@ SeatsioSeatingChart.propTypes = {
     events: PropTypes.array,
     workspaceKey: PropTypes.string.isRequired,
     onChartRendered: PropTypes.func,
+    onObjectClicked: PropTypes.func,
+    onObjectSelected: PropTypes.func,
+    onObjectDeselected: PropTypes.func,
     pricing: PropTypes.array,
     priceFormatter: PropTypes.func,
     numberOfPlacesToSelect: PropTypes.number,
