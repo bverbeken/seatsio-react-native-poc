@@ -27,5 +27,9 @@ export default class SeatsioObject {
         return this.injectJsFn(`chart.findObject(${JSON.stringify(this.id)}).then(o => o.isInChannel(${JSON.stringify(channelKey)}))`)
     }
 
+    async select(ticketType) {
+        return this.injectJsFn(`chart.findObject(${JSON.stringify(this.id)}).then(o => o.select(${JSON.stringify(ticketType)}))`)
+    }
+
 
 }
