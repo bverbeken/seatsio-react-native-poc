@@ -1,49 +1,46 @@
-import Deferred from "./deferred"
-import {randomUuid} from "./util"
 import SeatsioObject from "./seatsioObject";
 
 export default class Chart {
 
-    constructor(data, injectJsFn, registerPromiseFn) {
+    constructor(data, injectJsAndReturnDeferredFn) {
         this.data = data
-        this.injectJsFn = injectJsFn
-        this.registerPromiseFn = registerPromiseFn
+        this.injectJsAndReturnDeferredFn = injectJsAndReturnDeferredFn
     }
 
     getHoldToken() {
-        return this._injectJsAndReturnDeferred(`getHoldToken()`)
+        return this.injectJsAndReturnDeferredFn(`getHoldToken()`)
     }
 
     resetView() {
-        return this._injectJsAndReturnDeferred('chart.resetView()')
+        return this.injectJsAndReturnDeferredFn('chart.resetView()')
     }
 
     startNewSession() {
-        return this._injectJsAndReturnDeferred('chart.startNewSession()')
+        return this.injectJsAndReturnDeferredFn('chart.startNewSession()')
     }
 
     listSelectedObjects() {
-        return this._injectJsAndReturnDeferred(`chart.listSelectedObjects()`)
+        return this.injectJsAndReturnDeferredFn(`chart.listSelectedObjects()`)
     }
 
     clearSelection() {
-        return this._injectJsAndReturnDeferred('chart.clearSelection()')
+        return this.injectJsAndReturnDeferredFn('chart.clearSelection()')
     }
 
     selectObjects(objects) {
-        return this._injectJsAndReturnDeferred(`chart.selectObjects(${JSON.stringify(objects)})`)
+        return this.injectJsAndReturnDeferredFn(`chart.selectObjects(${JSON.stringify(objects)})`)
     }
 
     deselectObjects(objects) {
-        return this._injectJsAndReturnDeferred(`chart.deselectObjects(${JSON.stringify(objects)})`)
+        return this.injectJsAndReturnDeferredFn(`chart.deselectObjects(${JSON.stringify(objects)})`)
     }
 
     selectCategories(categories) {
-        return this._injectJsAndReturnDeferred(`chart.selectCategories(${JSON.stringify(categories)})`)
+        return this.injectJsAndReturnDeferredFn(`chart.selectCategories(${JSON.stringify(categories)})`)
     }
 
     deselectCategories(categories) {
-        return this._injectJsAndReturnDeferred(`chart.deselectCategories(${JSON.stringify(categories)})`)
+        return this.injectJsAndReturnDeferredFn(`chart.deselectCategories(${JSON.stringify(categories)})`)
     }
 
     changeConfig(newConfig) {
@@ -53,45 +50,24 @@ export default class Chart {
         if (newConfig.objectLabel) {
             newConfig.objectLabel = newConfig.objectLabel.toString()
         }
-        return this._injectJsAndReturnDeferred('chart.changeConfig(' + JSON.stringify(newConfig) + ')')
+        return this.injectJsAndReturnDeferredFn('chart.changeConfig(' + JSON.stringify(newConfig) + ')')
     }
 
     findObject(label) {
-        return this._injectJsAndReturnDeferred(`chart.findObject(${JSON.stringify(label)})`, o => new SeatsioObject(o, this.injectJsFn))
+        return this.injectJsAndReturnDeferredFn(`chart.findObject(${JSON.stringify(label)})`, o => new SeatsioObject(o, this.injectJsAndReturnDeferredFn))
     }
 
     listCategories() {
-        return this._injectJsAndReturnDeferred(`chart.listCategories()`)
+        return this.injectJsAndReturnDeferredFn(`chart.listCategories()`)
     }
 
     zoomToSelectedObjects() {
-        return this._injectJsAndReturnDeferred(`chart.zoomToSelectedObjects()`)
+        return this.injectJsAndReturnDeferredFn(`chart.zoomToSelectedObjects()`)
     }
 
     zoomToFilteredCategories() {
-        return this._injectJsAndReturnDeferred(`chart.zoomToFilteredCategories()`)
+        return this.injectJsAndReturnDeferredFn(`chart.zoomToFilteredCategories()`)
     }
 
-    _injectJsAndReturnDeferred(js, transformer) {
-        const deferred = new Deferred(transformer)
-        const uuid = randomUuid()
-        this.registerPromiseFn(uuid, deferred)
-        this.injectJsFn(js + `
-            .then((o) => {
-                window.ReactNativeWebView.postMessage(JSON.stringify({
-                    type: "${uuid}",
-                    promiseResult: "resolve",
-                    data: o
-                }))
-            })
-            .catch((e) => {
-                window.ReactNativeWebView.postMessage(JSON.stringify({
-                    type: "${uuid}",
-                    promiseResult: "reject",
-                    data: e
-                }))
-            })
-        `)
-        return deferred
-    }
+
 }

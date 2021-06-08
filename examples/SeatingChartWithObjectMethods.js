@@ -17,7 +17,15 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
                         />
 
                     </View>
-                    {this.button("Log object properties", (o) => console.log(o.isInChannel('abc')))}
+                    {<Button title={"Log object properties"}
+                             onPress={() => {
+                                 return this.chart.findObject('A-1')
+                                     .then((o) => {
+                                         console.log(o.label)
+                                         return o.isInChannel('abc');
+                                     })
+                                     .then(isInChannel => console.log('in channel: ' + isInChannel))
+                             }}/>}
                     <View>
 
                     </View>
@@ -26,11 +34,6 @@ class SimpleSeatingChartWithChangeConfig extends React.Component {
             </View>
         );
     }
-
-    button(caption, fn) {
-        return <Button title={caption} onPress={() => this.chart.findObject('A-1').then(fn)}/>;
-    }
-
     styles = StyleSheet.create({
         container: {
             ...StyleSheet.absoluteFillObject,
