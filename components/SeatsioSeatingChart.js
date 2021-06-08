@@ -97,13 +97,13 @@ class SeatsioSeatingChart extends React.Component {
         if (message.type === 'log') {
             console.log(message.data);
         } else if (message.type === 'onChartRendered') {
-            this.props.onChartRendered(new Chart(message.data, this.injectJsAndReturnDeferredFn.bind(this)));
+            this.props.onChartRendered(new Chart(message.data.chart, this.injectJsAndReturnDeferredFn.bind(this)));
         } else if (message.type === 'onObjectClicked') {
-            this.props.onObjectClicked(new SeatsioObject(message.data, this.injectJsAndReturnDeferredFn.bind(this)));
+            this.props.onObjectClicked(new SeatsioObject(message.data.object, this.injectJsAndReturnDeferredFn.bind(this)));
         } else if (message.type === 'onObjectSelected') {
-            this.props.onObjectSelected(new SeatsioObject(message.data.object, this.injectJsAndReturnDeferredFn.bind(this)), message.selectedTicketType)
+            this.props.onObjectSelected(new SeatsioObject(message.data.object, this.injectJsAndReturnDeferredFn.bind(this)), message.data.selectedTicketType)
         } else if (message.type === 'onObjectDeselected') {
-            this.props.onObjectDeselected(new SeatsioObject(message.data.object, this.injectJsAndReturnDeferredFn.bind(this)), message.deselectedTicketType)
+            this.props.onObjectDeselected(new SeatsioObject(message.data.object, this.injectJsAndReturnDeferredFn.bind(this)), message.data.deselectedTicketType)
         } else if (message.type === 'priceFormatterRequested') {
             let formattedPrice = this.props.priceFormatter(message.data.price);
             this.injectJs(
@@ -156,6 +156,20 @@ class SeatsioSeatingChart extends React.Component {
         `;
     }
 
+    registerPostMessage(event, callbackParams) {
+        const data = callbackParams.map(param => param + ': ' + param).join(', ')
+        return `
+                , "${event}": (${callbackParams.join(', ')}) => {
+                    window.ReactNativeWebView.postMessage(JSON.stringify({
+                        type: "${event}",
+                        data: {
+                            ${data}
+                        }
+                    }))
+                }
+            `
+    }
+
     configAsString() {
         let {
             onChartRendered,
@@ -176,50 +190,16 @@ class SeatsioSeatingChart extends React.Component {
         config.divId = this.divId;
         let configString = JSON.stringify(config).slice(0, -1);
         if (onChartRendered) {
-            configString += `
-                , "onChartRendered": (chart) => {
-                    window.ReactNativeWebView.postMessage(JSON.stringify({
-                        type: "onChartRendered",
-                        data: chart
-                    }))
-                }
-            `;
+            configString += this.registerPostMessage('onChartRendered', ['chart'])
         }
         if (onObjectClicked) {
-            configString += `
-                , "onObjectClicked": (object) => {
-                    window.ReactNativeWebView.postMessage(JSON.stringify({
-                        type: "onObjectClicked",
-                        data: object
-                    }))
-                }
-            `;
+            configString += this.registerPostMessage('onObjectClicked', ['object'])
         }
         if (onObjectSelected) {
-            configString += `
-                , "onObjectSelected": (object, selectedTicketType) => {
-                    window.ReactNativeWebView.postMessage(JSON.stringify({
-                        type: "onObjectSelected",
-                        data: {
-                            object: object, 
-                            selectedTicketType: selectedTicketType
-                        }
-                    }))
-                }
-            `;
+            configString += this.registerPostMessage('onObjectSelected', ['object', 'selectedTicketType'])
         }
         if (onObjectDeselected) {
-            configString += `
-                , "onObjectDeselected": (object, deselectedTicketType) => {
-                    window.ReactNativeWebView.postMessage(JSON.stringify({
-                        type: "onObjectDeselected",
-                        data: {
-                            object: object, 
-                            deselectedTicketType: deselectedTicketType
-                        }
-                    }))
-                }
-            `;
+            configString += this.registerPostMessage('onObjectDeselected', ['object', 'deselectedTicketType'])
         }
         if (priceFormatter) {
             configString += `
