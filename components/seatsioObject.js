@@ -35,5 +35,13 @@ export default class SeatsioObject {
         return this.injectJsFn(`chart.findObject(${JSON.stringify(this.id)}).then(o => o.deselect(${JSON.stringify(ticketType)}))`)
     }
 
+    async pulse() {
+        return this.injectJsFn(`chart.findObject(${JSON.stringify(this.id)}).then(o => o.pulse())`)
+    }
+
+    async unpulse() {
+        return this.injectJsFn(`chart.findObject(${JSON.stringify(this.id)}).then(o => o.unpulse())`)
+    }
+
 
 }
