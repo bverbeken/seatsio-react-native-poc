@@ -26,6 +26,8 @@ class ReactToEventsExample extends React.Component {
                             onReleaseHoldFailed={(objects, ticketTypes) => console.log('release hold failed: ', objects, ticketTypes)}
                             onSelectionValid={() => console.log("selection valid")}
                             onSelectionInvalid={() => console.log("selection invalid")}
+                            onFullScreenOpened={() => console.log("full screen opened")}
+                            onFullScreenClosed={() => console.log("full screen closed")}
                         />
                     </View>
 
