@@ -112,6 +112,8 @@ class SeatsioSeatingChart extends React.Component {
             this.props.onHoldSucceeded(message.data.objects, message.data.ticketTypes)
         } else if (message.type === 'onHoldFailed') {
             this.props.onHoldFailed(message.data.objects, message.data.ticketTypes)
+        } else if (message.type === 'onHoldTokenExpired') {
+            this.props.onHoldTokenExpired()
         } else if (message.type === 'priceFormatterRequested') {
             let formattedPrice = this.props.priceFormatter(message.data.price);
             this.injectJs(
@@ -187,6 +189,8 @@ class SeatsioSeatingChart extends React.Component {
             onSelectedObjectBooked,
             onSessionInitialized,
             onHoldSucceeded,
+            onHoldFailed,
+            onHoldTokenExpired,
             priceFormatter,
             tooltipInfo,
             objectColor,
@@ -221,8 +225,11 @@ class SeatsioSeatingChart extends React.Component {
         if (onHoldSucceeded) {
             configString += this.registerPostMessage('onHoldSucceeded', ['objects', 'ticketTypes'])
         }
-        if (onHoldSucceeded) {
+        if (onHoldFailed) {
             configString += this.registerPostMessage('onHoldFailed', ['objects', 'ticketTypes'])
+        }
+        if (onHoldTokenExpired) {
+            configString += this.registerPostMessage('onHoldTokenExpired', [])
         }
         if (priceFormatter) {
             configString += `
@@ -351,6 +358,7 @@ SeatsioSeatingChart.propTypes = {
     onSessionInitialized: PropTypes.func,
     onHoldSucceeded: PropTypes.func,
     onHoldFailed: PropTypes.func,
+    onHoldTokenExpired: PropTypes.func,
     pricing: PropTypes.array,
     priceFormatter: PropTypes.func,
     numberOfPlacesToSelect: PropTypes.number,

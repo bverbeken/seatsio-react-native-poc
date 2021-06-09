@@ -21,6 +21,7 @@ class ReactToEventsExample extends React.Component {
                             onSessionInitialized={holdToken => console.log('new token: ' + holdToken.token)}
                             onHoldSucceeded={(objects, ticketTypes) => console.log('objects held: ' + objects.map(o => o.label).join(', ') + " with ticket types: " + ticketTypes.join(', '))}
                             onHoldFailed={(objects, ticketTypes) => console.log('holding objects failed: ' + objects.map(o => o.label).join(', ') + " with ticket types: " + ticketTypes.join(', '))}
+                            onHoldTokenExpired={() => console.log('hold expired!')}
                         />
                     </View>
 
