@@ -126,6 +126,8 @@ class SeatsioSeatingChart extends React.Component {
             this.props.onFullScreenOpened()
         } else if (message.type === 'onFullScreenClosed') {
             this.props.onFullScreenClosed()
+        } else if (message.type === 'onFilteredCategoriesChanged') {
+            this.props.onFilteredCategoriesChanged(message.data.categories)
         } else if (message.type === 'priceFormatterRequested') {
             let formattedPrice = this.props.priceFormatter(message.data.price);
             this.injectJs(
@@ -209,6 +211,7 @@ class SeatsioSeatingChart extends React.Component {
             onSelectionInvalid,
             onFullScreenOpened,
             onFullScreenClosed,
+            onFilteredCategoriesChanged,
             priceFormatter,
             tooltipInfo,
             objectColor,
@@ -266,6 +269,9 @@ class SeatsioSeatingChart extends React.Component {
         }
         if (onFullScreenClosed) {
             configString += this.registerPostMessage('onFullScreenClosed', [])
+        }
+        if (onFilteredCategoriesChanged) {
+            configString += this.registerPostMessage('onFilteredCategoriesChanged', ['categories'])
         }
         if (priceFormatter) {
             configString += `
@@ -401,6 +407,7 @@ SeatsioSeatingChart.propTypes = {
     onSelectionInvalid: PropTypes.func,
     onFullScreenOpened: PropTypes.func,
     onFullScreenClosed: PropTypes.func,
+    onFilteredCategoriesChanged: PropTypes.func,
     pricing: PropTypes.array,
     priceFormatter: PropTypes.func,
     numberOfPlacesToSelect: PropTypes.number,
