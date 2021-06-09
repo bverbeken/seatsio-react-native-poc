@@ -13,10 +13,12 @@ class ReactToEventsExample extends React.Component {
                         <SeatsioSeatingChart
                             workspaceKey="publicDemoKey"
                             event="smallTheatreEvent2"
+                            session={'start'}
                             onObjectSelected={o => o.pulse()}
                             onObjectDeselected={o => o.unpulse()}
                             onObjectClicked={o => console.log("object clicked: " + o.label)}
                             onSelectedObjectBooked={o => console.log("You selected " + o.label + ' but it became unavailable in the meantime')}
+                            onSessionInitialized={holdToken => console.log('new token: ' + holdToken.token)}
                         />
                     </View>
 
