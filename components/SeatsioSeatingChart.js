@@ -118,6 +118,10 @@ class SeatsioSeatingChart extends React.Component {
             this.props.onReleaseHoldSucceeded(message.data.objects, message.data.ticketTypes)
         } else if (message.type === 'onReleaseHoldFailed') {
             this.props.onReleaseHoldFailed(message.data.objects, message.data.ticketTypes)
+        } else if (message.type === 'onSelectionValid') {
+            this.props.onSelectionValid()
+        } else if (message.type === 'onSelectionInvalid') {
+            this.props.onSelectionInvalid()
         } else if (message.type === 'priceFormatterRequested') {
             let formattedPrice = this.props.priceFormatter(message.data.price);
             this.injectJs(
@@ -197,6 +201,8 @@ class SeatsioSeatingChart extends React.Component {
             onHoldTokenExpired,
             onReleaseHoldSucceeded,
             onReleaseHoldFailed,
+            onSelectionValid,
+            onSelectionInvalid,
             priceFormatter,
             tooltipInfo,
             objectColor,
@@ -242,6 +248,12 @@ class SeatsioSeatingChart extends React.Component {
         }
         if (onReleaseHoldFailed) {
             configString += this.registerPostMessage('onReleaseHoldFailed', ['objects', 'ticketTypes'])
+        }
+        if (onSelectionValid) {
+            configString += this.registerPostMessage('onSelectionValid', [])
+        }
+        if (onSelectionInvalid) {
+            configString += this.registerPostMessage('onSelectionInvalid', [])
         }
         if (priceFormatter) {
             configString += `
@@ -373,6 +385,8 @@ SeatsioSeatingChart.propTypes = {
     onHoldTokenExpired: PropTypes.func,
     onReleaseHoldSucceeded: PropTypes.func,
     onReleaseHoldFailed: PropTypes.func,
+    onSelectionValid: PropTypes.func,
+    onSelectionInvalid: PropTypes.func,
     pricing: PropTypes.array,
     priceFormatter: PropTypes.func,
     numberOfPlacesToSelect: PropTypes.number,

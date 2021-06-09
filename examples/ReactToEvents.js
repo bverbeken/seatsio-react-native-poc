@@ -24,6 +24,8 @@ class ReactToEventsExample extends React.Component {
                             onHoldTokenExpired={() => console.log('hold expired!')}
                             onReleaseHoldSucceeded={(objects, ticketTypes) => console.log('release hold succeeded: ', objects, ticketTypes)}
                             onReleaseHoldFailed={(objects, ticketTypes) => console.log('release hold failed: ', objects, ticketTypes)}
+                            onSelectionValid={() => console.log("selection valid")}
+                            onSelectionInvalid={() => console.log("selection invalid")}
                         />
                     </View>
 
